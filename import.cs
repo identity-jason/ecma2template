@@ -16,6 +16,7 @@ namespace FimSync_Ezma
         public int ImportDefaultPageSize => DEFAULT_PAGE_SIZE;
 
         public int ImportMaxPageSize => MAXIMUM_PAGE_SIZE;
+        private string Watermark { get; set; } = "0";
 
         public CloseImportConnectionResults CloseImportConnection(CloseImportConnectionRunStep importRunStep)
         {
@@ -37,6 +38,9 @@ namespace FimSync_Ezma
 
             }
 
+            //-- acquire the starting watermark
+            Watermark = importRunStep.CustomData;
+
             return rv;
         }
 
@@ -57,12 +61,12 @@ namespace FimSync_Ezma
 #if SUPPORT_DELTA
         private GetImportEntriesResults FetchDeltaImport(GetImportEntriesRunStep importRunStep)
         {
-            return new GetImportEntriesResults("OK", false, new List<CSEntryChange>());
+            return new GetImportEntriesResults(Watermark, false, new List<CSEntryChange>());
         }
 #endif
         private GetImportEntriesResults FetchImport(GetImportEntriesRunStep importRunStep)
         {
-            return new GetImportEntriesResults("OK", false, new List<CSEntryChange>());
+            return new GetImportEntriesResults(Watermark, false, new List<CSEntryChange>());
         }
     }
 

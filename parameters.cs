@@ -123,14 +123,17 @@ namespace FimSync_Ezma
         /// Make sure that the parameters passed into MIM are persisted
         /// </summary>
         /// <param name="configParameters"></param>
-        private void StoreParameters(KeyedCollection<string, ConfigParameter> configParameters, Schema types=null)
+        private void StoreParameters(KeyedCollection<string, ConfigParameter> configParameters, Schema types = null)
         {
             Parameters = configParameters;
             schema = types;
 
             foreach (ConfigParameter cp in configParameters)
             {
-                logger.Info("{0}: {1}", cp.Name, cp.Value);
+                if (cp.IsEncrypted)
+                    logger.Info("{0}:", cp.Name);
+                else
+                    logger.Info("{0}: {1}", cp.Name, cp.Value);
             }
         }
 
@@ -153,7 +156,7 @@ namespace FimSync_Ezma
         /// <returns></returns>
         private ConfigParameter GetParameter(string parameterName)
         {
-            if (Parameters==null)
+            if (Parameters == null)
             {
                 throw new UnexpectedDataException("Paramaters store is null - have parameters been properly loaded yet?");
             }
