@@ -25,6 +25,14 @@ namespace FimSync_Ezma
         public void OpenExportConnection(KeyedCollection<string, ConfigParameter> configParameters, Schema types, OpenExportConnectionRunStep exportRunStep)
         {
             StoreParameters(configParameters, types, exportRunStep);
+            
+            //-- create a connection out to the target system
+            //-- and persist it for later use as required
+            PersistedConnector = OpenConnection();
+            if (PersistedConnector != null)
+            {
+
+            }
         }
 
         public PutExportEntriesResults PutExportEntries(IList<CSEntryChange> csentries)

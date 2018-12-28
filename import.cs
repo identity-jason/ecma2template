@@ -29,7 +29,10 @@ namespace FimSync_Ezma
             StoreParameters(configParameters, types, importRunStep);
             var rv = new OpenImportConnectionResults();
 
-            if (OpenConnection())
+            //-- create a connection out to the target system
+            //-- and persist it for later use as required
+            PersistedConnector = OpenConnection();
+            if (PersistedConnector!=null)
             {
 
             }
