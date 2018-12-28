@@ -12,9 +12,16 @@ namespace FimSync_Ezma
 {
     public partial class EzmaExtension
     {
+#if USE_PARTITIONS
+        /// <summary>
+        /// Return partition information from the target system
+        /// </summary>
+        /// <param name="configParameters"></param>
+        /// <returns></returns>
         public IList<Partition> GetPartitions(KeyedCollection<string, ConfigParameter> configParameters)
         {
             throw new NotImplementedException();
         }
+#endif
     }
 }

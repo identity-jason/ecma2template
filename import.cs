@@ -13,24 +13,54 @@ namespace FimSync_Ezma
     public partial class EzmaExtension
     {
 #if SUPPORT_IMPORT
-        public int ImportDefaultPageSize => throw new NotImplementedException();
+        public int ImportDefaultPageSize => DEFAULT_PAGE_SIZE;
 
-        public int ImportMaxPageSize => throw new NotImplementedException();
+        public int ImportMaxPageSize => MAXIMUM_PAGE_SIZE;
 
         public CloseImportConnectionResults CloseImportConnection(CloseImportConnectionRunStep importRunStep)
         {
-            throw new NotImplementedException();
-        }
+            CloseConnection();
 
-        public GetImportEntriesResults GetImportEntries(GetImportEntriesRunStep importRunStep)
-        {
-            throw new NotImplementedException();
+            return new CloseImportConnectionResults();
         }
 
         public OpenImportConnectionResults OpenImportConnection(KeyedCollection<string, ConfigParameter> configParameters, Schema types, OpenImportConnectionRunStep importRunStep)
         {
-            throw new NotImplementedException();
+            StoreParameters(configParameters, types, importRunStep);
+            var rv = new OpenImportConnectionResults();
+
+            if (OpenConnection())
+            {
+
+            }
+
+            return rv;
+        }
+
+        public GetImportEntriesResults GetImportEntries(GetImportEntriesRunStep importRunStep)
+        {
+#if SUPPORT_DELTA
+            if (IRS.ImportType == OperationType.Full)
+                return FetchImport(importRunStep);
+            else
+                return FetchDeltaImport(importRunStep);
+#else
+            return FetchImport(importRunStep);
+#endif
         }
 #endif
+
+
+#if SUPPORT_DELTA
+        private GetImportEntriesResults FetchDeltaImport(GetImportEntriesRunStep importRunStep)
+        {
+            return new GetImportEntriesResults("OK", false, new List<CSEntryChange>());
+        }
+#endif
+        private GetImportEntriesResults FetchImport(GetImportEntriesRunStep importRunStep)
+        {
+            return new GetImportEntriesResults("OK", false, new List<CSEntryChange>());
+        }
     }
+
 }

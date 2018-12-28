@@ -26,7 +26,7 @@
     <MyType>Windows</MyType>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <OldToolsVersion>3.5</OldToolsVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -35,7 +35,7 @@
     <DocumentationFile />
     <BaseAddress>285212672</BaseAddress>
     <ConfigurationOverrideFile />
-    <DefineConstants>USE_HIERARCHY,USE_PARTITIONS,SUPPORT_IMPORT,SUPPORT_EXPORT,SUPPORT_PASSWORDS</DefineConstants>
+    <DefineConstants>USE_HIERARCHY,USE_PARTITIONS,SUPPORT_IMPORT,SUPPORT_DELTA,SUPPORT_EXPORT,SUPPORT_PASSWORDS,ADVANCED_PARAMETERS</DefineConstants>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <DebugSymbols>true</DebugSymbols>
@@ -65,16 +65,24 @@
     <DebugType>none</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.MetadirectoryServicesEx, Version=4.1.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Program Files\Microsoft Forefront Identity Manager\2010\Synchronization Service\Bin\Assemblies\Microsoft.MetadirectoryServicesEx.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>packages\NLog.4.5.11\lib\net40-client\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
@@ -86,13 +94,19 @@
     <Compile Include="capabilities.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Connection.cs" />
+    <Compile Include="constants.cs" />
     <Compile Include="export.cs" />
     <Compile Include="hierarchy.cs" />
     <Compile Include="import.cs" />
     <Compile Include="parameters.cs" />
     <Compile Include="partitions.cs" />
     <Compile Include="password.cs" />
+    <Compile Include="routing.cs" />
     <Compile Include="schema.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

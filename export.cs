@@ -13,18 +13,18 @@ namespace FimSync_Ezma
     public partial class EzmaExtension
     {
 #if SUPPORT_EXPORT
-        public int ExportDefaultPageSize => throw new NotImplementedException();
+        public int ExportDefaultPageSize => DEFAULT_PAGE_SIZE;
 
-        public int ExportMaxPageSize => throw new NotImplementedException();
+        public int ExportMaxPageSize => MAXIMUM_PAGE_SIZE;
 
         public void CloseExportConnection(CloseExportConnectionRunStep exportRunStep)
         {
-            throw new NotImplementedException();
+            CloseConnection();
         }
 
         public void OpenExportConnection(KeyedCollection<string, ConfigParameter> configParameters, Schema types, OpenExportConnectionRunStep exportRunStep)
         {
-            throw new NotImplementedException();
+            StoreParameters(configParameters, types, exportRunStep);
         }
 
         public PutExportEntriesResults PutExportEntries(IList<CSEntryChange> csentries)
